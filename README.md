@@ -26,23 +26,43 @@ const { IDAppleSignInPlugIn } = Plugins
 export class HomePage {
 
   constructor() {}
-
-
-  async doAppleLogin(){
-      const wait = IDAppleSignInPlugIn.doAppleLogin({}, (info, err) => {
+     IDAppleSignInPlugIn.doAppleLogin().then((info)=>{
+      if (info){
+        console.log("on a info ")
         console.log(info)
-        console.log("======= ERR")
-        console.log(err)
-      })
-  }
+        let identityTokenString = info["identityTokenString"]
+        if (identityTokenString){
+          console.log("on recoit "+identityTokenString)
+        }
+      }
+      else{
+        console.log("Pas de info")
+      }
+ 
+     })
 }
 
 ```
   
 
 ### API
+```sh
+IDAppleSignInPlugIn.doAppleLogin().then((info)=>{
+    
+})
+```
 
-IDAppleSignInPlugIn.doAppleLogin({}, (info, err)
+You will get the sign in information in the info parameter:
+
+| Variables | Description |
+| ------ | ------ |
+| user | user identifier |
+| email | email user |
+| identityTokenString | Token identifier |
+...
+Please refer to Apple documentation to know possible values
+https://developer.apple.com/documentation/authenticationservices/asauthorizationappleidcredential
+
 
 License
 ----
